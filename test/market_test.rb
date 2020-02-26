@@ -67,4 +67,22 @@ class MarketTest < MiniTest::Test
     @market.add_vendor(@vendor3)
     assert_equal [@vendor1, @vendor3], @market.vendors_that_sell(@item1)
   end
+
+  def test_it_can_get_total_inventory
+    @vendor1.stock(@item1, 35)
+    @vendor1.stock(@item2, 7)
+    @market.add_vendor(@vendor1)
+
+    @vendor2.stock(@item4, 50)
+    @vendor2.stock(@item3, 25)
+    @market.add_vendor(@vendor2)
+
+    @vendor3.stock(@item1, 65)
+    @vendor3.stock(@item3, 10)
+    @market.add_vendor(@vendor3)
+
+    assert @market.total_inventory.key?(@item1)
+    assert @market.total_inventory.key?(@item2)
+    assert @market.total_inventory.key?(@item3)
+  end
 end
